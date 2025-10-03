@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KDI BLOG – 내 키에 맞는 책상 높이 계산기</title>
+    <meta name="description" content="신장과 체형을 입력하면 인체공학적 책상·의자·모니터 높이를 즉시 계산합니다. ISO 9241 표준 기반.">
+    <meta name="keywords" content="책상 높이, 의자 높이, 모니터 높이, 인체공학, ergonomics, 홈오피스, 재택근무">
+    <meta name="author" content="KDI BLOG">
+
+    <!-- Open Graph (SNS 공유) -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="KDI BLOG – 내 키에 맞는 책상 높이 계산기">
+    <meta property="og:description" content="3초 만에 확인하는 나만의 인체공학적 작업 환경. ISO 9241 표준 기반.">
+    <meta property="og:url" content="https://KDI BLOG.example.com">
+    <meta property="og:site_name" content="KDI BLOG">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="KDI BLOG – 내 키에 맞는 책상 높이 계산기">
+    <meta name="twitter:description" content="3초 만에 확인하는 나만의 인체공학적 작업 환경">
+
+    <!-- Favicon (SVG) -->
+    <link rel="icon" type="image/svg+xml"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect x='10' y='20' width='80' height='50' rx='8' fill='%2322d3ee'/><rect x='30' y='70' width='40' height='8' fill='%2322d3ee'/><rect x='45' y='62' width='10' height='8' fill='%2322d3ee'/></svg>">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+    <!-- Background Gradient -->
+    <div class="bg-gradient"></div>
+
+    <!-- App Container -->
+    <div class="app-container">
+
+        <!-- Header -->
+        <header class="header">
+            <div class="brand">
+                <svg class="brand-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    aria-hidden="true">
+                    <rect x="3" y="4" width="18" height="12" rx="2" />
+                    <path d="M7 20h10M12 16v4" />
+                </svg>
+                <h1 class="brand-title">KDI BLOG</h1>
+            </div>
+            <p class="brand-subtitle">내 키에 맞는 책상,의자,모니터 셋팅</p>
+        </header>
+
+        <!-- Main Content Grid -->
+        <main class="main-grid">
+
+            <!-- Left: Input Section -->
+            <section class="input-section" aria-label="입력 영역">
+
+                <!-- Height Input -->
+                <div class="input-card">
+                    <label for="height-input" class="input-label">
+                        신장 입력
+                        <span class="label-hint">0.1cm 단위</span>
+                    </label>
+
+                    <div class="height-control">
+                        <button type="button" class="stepper-btn" data-action="decrease" aria-label="0.1cm 감소">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                aria-hidden="true">
+                                <path d="M5 12h14" />
+                            </svg>
+                        </button>
+                        <div class="height-input-wrapper">
+                            <input type="number" id="height-input" class="height-input" min="100" max="220" step="0.1"
+                                value="170.0" placeholder="예: 176.3">
+                            <span class="height-unit" aria-hidden="true">cm</span>
+                        </div>
+                        <button type="button" class="stepper-btn" data-action="increase" aria-label="0.1cm 증가">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                aria-hidden="true">
+                                <path d="M12 5v14M5 12h14" />
+                            </svg>
+                        </button>
+                    </div>
+
+                    <input type="range" id="height-slider" class="height-slider" min="100" max="220" step="0.1"
+                        value="170" aria-label="신장 슬라이더">
+                    <div class="range-labels">
+                        <span>100cm</span>
+                        <span id="current-value">170.0 cm</span>
+                        <span>220cm</span>
+                    </div>
+                </div>
+
+                <!-- Environment Selection -->
+                <div class="input-card">
+                    <label class="input-label">
+                        사용 환경
+                        <span class="label-hint">신발 착용 여부</span>
+                    </label>
+                    <div class="env-toggle">
+                        <div class="env-option active" data-env="home" tabindex="0">
+                            <span class="env-icon" aria-hidden="true">🏠</span>
+                            <span class="env-label">홈오피스</span>
+                            <span class="env-desc">맨발/실내화</span>
+                        </div>
+                        <div class="env-option" data-env="office" tabindex="0">
+                            <span class="env-icon" aria-hidden="true">🏢</span>
+                            <span class="env-label">사무실</span>
+                            <span class="env-desc">신발 착용</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Body Profile -->
+                <div class="input-card">
+                    <label class="input-label">체형 보정</label>
+                    <div class="profile-tabs" role="tablist" aria-label="체형 선택">
+                        <button type="button" class="profile-tab" role="tab" data-profile="standard"
+                            aria-selected="true">표준</button>
+                        <button type="button" class="profile-tab" role="tab" data-profile="longLegs"
+                            aria-selected="false">하체 긴 편</button>
+                        <button type="button" class="profile-tab" role="tab" data-profile="longTorso"
+                            aria-selected="false">상체 긴 편</button>
+                    </div>
+                </div>
+
+            </section>
+
+            <!-- Right: Results & Guide -->
+            <section class="results-section">
+
+                <!-- Results Cards -->
+                <div class="results-header">
+                    <h2 class="section-title">권장 높이</h2>
+                </div>
+
+                <div class="results-grid">
+
+                    <!-- Chair -->
+                    <article class="result-card" data-type="chair">
+                        <div class="card-header">
+                            <div class="card-icon" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path
+                                        d="M12 3v6M8 9H6a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2v-8a2 2 0 00-2-2h-2" />
+                                    <rect x="7" y="9" width="10" height="6" rx="1" />
+                                    <path d="M7 19v2M17 19v2" />
+                                </svg>
+                            </div>
+                            <h3 class="card-title">의자 (앉는면)</h3>
+                        </div>
+                        <div class="card-value">
+                            <span class="value-number" data-result="chair">42.2</span>
+                            <span class="value-unit" aria-hidden="true">cm</span>
+                        </div>
+                        <p class="card-range">
+                            범위: <span data-range="chair">40.7–43.7 cm</span>
+                        </p>
+                    </article>
+
+                    <!-- Desk -->
+                    <article class="result-card" data-type="desk">
+                        <div class="card-header">
+                            <div class="card-icon" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect x="3" y="4" width="18" height="2" />
+                                    <path d="M5 6v12M19 6v12" />
+                                </svg>
+                            </div>
+                            <h3 class="card-title">책상</h3>
+                        </div>
+                        <div class="card-value">
+                            <span class="value-number" data-result="desk">65.2</span>
+                            <span class="value-unit" aria-hidden="true">cm</span>
+                        </div>
+                        <p class="card-range">
+                            범위: <span data-range="desk">63.7–66.7 cm</span>
+                        </p>
+                    </article>
+
+                    <!-- Monitor -->
+                    <article class="result-card" data-type="monitor">
+                        <div class="card-header">
+                            <div class="card-icon" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect x="2" y="3" width="20" height="14" rx="2" />
+                                    <path d="M8 21h8M12 17v4" />
+                                </svg>
+                            </div>
+                            <h3 class="card-title">모니터 상단</h3>
+                        </div>
+                        <div class="card-value">
+                            <span class="value-number" data-result="monitor">95.2</span>
+                            <span class="value-unit" aria-hidden="true">cm</span>
+                        </div>
+                        <p class="card-range">
+                            범위: <span data-range="monitor">93.7–96.7 cm</span>
+                        </p>
+                    </article>
+
+                </div>
+
+                <!-- Tab Navigation -->
+                <div class="info-tabs" role="tablist" aria-label="정보 탭">
+                    <button type="button" class="info-tab active" data-tab="formula" role="tab" aria-selected="true">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                            <circle cx="12" cy="12" r="10" />
+                            <path d="M8 12h8M12 8v8" />
+                        </svg>
+                        <span>계산 근거</span>
+                    </button>
+                    <button type="button" class="info-tab" data-tab="guide" role="tab" aria-selected="false">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                            <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2" />
+                        </svg>
+                        <span>세팅 루틴</span>
+                    </button>
+                </div>
+
+                <!-- Tab 1: Formula (기본 활성화) -->
+                <div class="tab-content active" data-content="formula">
+                    <div class="formula-section">
+
+                        <div class="formula-header">
+                            <h3 class="formula-title">인체공학 표준 비율 기반</h3>
+                            <p class="formula-subtitle">ISO 9241 권장사항 및 ANSI/HFES 100 표준 참조</p>
+                        </div>
+
+                        <!-- Environment Note -->
+                        <div class="env-note">
+                            <strong>현재 설정:</strong> <span id="env-status">홈오피스 (신발 보정 없음)</span><br>
+                            사무실 모드 선택 시 신발 두께 2cm가 자동으로 보정됩니다.
+                        </div>
+
+                        <!-- Body Profile Note -->
+                        <div class="profile-note" id="profile-note">
+                            <div class="profile-note-header">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    aria-hidden="true">
+                                    <path d="M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" />
+                                    <circle cx="8.5" cy="7" r="4" />
+                                    <path d="M20 8v6M23 11h-6" />
+                                </svg>
+                                <strong id="profile-note-title">체형 보정: 표준</strong>
+                            </div>
+                            <p id="profile-note-desc">평균적인 신체 비율을 기준으로 계산합니다. 추가 보정값이 적용되지 않습니다.</p>
+                            <div class="profile-offsets" id="profile-offsets">
+                                <div class="offset-item">
+                                    <span class="offset-label">의자</span>
+                                    <span class="offset-value" data-offset="chair">+0.0 cm</span>
+                                </div>
+                                <div class="offset-item">
+                                    <span class="offset-label">책상</span>
+                                    <span class="offset-value" data-offset="desk">+0.0 cm</span>
+                                </div>
+                                <div class="offset-item">
+                                    <span class="offset-label">모니터</span>
+                                    <span class="offset-value" data-offset="monitor">+0.0 cm</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Chair Formula -->
+                        <div class="formula-card">
+                            <div class="formula-label">
+                                <span class="formula-dot" style="background: var(--color-chair);"
+                                    aria-hidden="true"></span>
+                                의자 높이
+                            </div>
+                            <div class="formula-equation">
+                                <code id="chair-formula">신장 × 0.245 + 0.5</code>
+                            </div>
+                            <ul class="formula-details">
+                                <li><strong>0.245</strong> = 슬와부 높이 비율 (무릎 뒤)</li>
+                                <li id="shoe-detail"><strong>신발 보정</strong> = 현재 없음 (홈오피스 모드)</li>
+                                <li><strong>+0.5</strong> = 쿠션 압축 보정</li>
+                                <li id="chair-offset-detail" class="offset-detail" style="display: none;">
+                                    <strong>체형 보정</strong> = <span id="chair-offset-text">+0.0 cm</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!-- Desk Formula -->
+                        <div class="formula-card">
+                            <div class="formula-label">
+                                <span class="formula-dot" style="background: var(--color-desk);"
+                                    aria-hidden="true"></span>
+                                책상 높이
+                            </div>
+                            <div class="formula-equation">
+                                <code>의자 높이 + 신장 × 0.135</code>
+                            </div>
+                            <ul class="formula-details">
+                                <li><strong>0.135</strong> = 좌면→팔꿈치 비율</li>
+                                <li>팔꿈치 90° 자세 유지</li>
+                                <li id="desk-offset-detail" class="offset-detail" style="display: none;">
+                                    <strong>체형 보정</strong> = <span id="desk-offset-text">+0.0 cm</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!-- Monitor Formula -->
+                        <div class="formula-card">
+                            <div class="formula-label">
+                                <span class="formula-dot" style="background: var(--color-monitor);"
+                                    aria-hidden="true"></span>
+                                모니터 상단
+                            </div>
+                            <div class="formula-equation">
+                                <code>책상 높이 + 30cm</code>
+                            </div>
+                            <ul class="formula-details">
+                                <li><strong>30cm</strong> = 팔꿈치→눈높이 평균</li>
+                                <li>시선 수평 or 5~15° 하향</li>
+                                <li id="monitor-offset-detail" class="offset-detail" style="display: none;">
+                                    <strong>체형 보정</strong> = <span id="monitor-offset-text">+0.0 cm</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!-- Body Type Comparison Table -->
+                        <div class="body-type-table">
+                            <h4 class="table-title">체형별 보정 근거</h4>
+                            <table class="comparison-table">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">체형</th>
+                                        <th scope="col">의자</th>
+                                        <th scope="col">책상</th>
+                                        <th scope="col">모니터</th>
+                                        <th scope="col">특징</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th scope="row"><strong>표준</strong></th>
+                                        <td>0 cm</td>
+                                        <td>0 cm</td>
+                                        <td>0 cm</td>
+                                        <td>평균 비율</td>
+                                    </tr>
+                                    <tr class="highlight-row" data-profile="longLegs">
+                                        <th scope="row"><strong>하체 긴 편</strong></th>
+                                        <td class="positive">+2.0 cm</td>
+                                        <td>0 cm</td>
+                                        <td class="negative">−0.7 cm</td>
+                                        <td>무릎↑ 눈높이 상대적↓</td>
+                                    </tr>
+                                    <tr class="highlight-row" data-profile="longTorso">
+                                        <th scope="row"><strong>상체 긴 편</strong></th>
+                                        <td class="negative">−2.0 cm</td>
+                                        <td class="positive">+1.5 cm</td>
+                                        <td class="positive">+1.5 cm</td>
+                                        <td>무릎↓ 팔꿈치·눈높이↑</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="table-note">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    aria-hidden="true">
+                                    <circle cx="12" cy="12" r="10" />
+                                    <path d="M12 16v-4M12 8h.01" />
+                                </svg>
+                                <p>
+                                    <strong>하체가 긴 편:</strong> 슬와부(무릎 뒤) 높이가 평균보다 높아 의자를 높게 조정하고, 상대적으로 상체가 짧아 모니터를 약간
+                                    낮춥니다.<br>
+                                    <strong>상체가 긴 편:</strong> 슬와부는 낮지만 팔꿈치와 눈높이가 높아 책상과 모니터를 높게 조정합니다.
+                                </p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Tab 2: Setup Guide -->
+                <div class="tab-content" data-content="guide">
+                    <div class="setup-guide">
+                        <div class="guide-step">
+                            <span class="step-num" aria-hidden="true">1</span>
+                            <p><strong>의자</strong> 발바닥이 바닥에 완전히 닿도록</p>
+                        </div>
+                        <div class="guide-step">
+                            <span class="step-num" aria-hidden="true">2</span>
+                            <p><strong>책상</strong> 팔꿈치 90°, 손목 자연스럽게</p>
+                        </div>
+                        <div class="guide-step">
+                            <span class="step-num" aria-hidden="true">3</span>
+                            <p><strong>모니터</strong> 눈높이=상단, 거리 50-70cm</p>
+                        </div>
+                    </div>
+                </div>
+
+            </section>
+
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p class="footer-text">
+                © 2025 KDI BLOG · 인체공학 표준 비율 기반 ·
+                <a href="#" class="footer-link">문의하기</a>
+            </p>
+            <p class="footer-credits">
+                Based on ISO 9241-5:1998 & ANSI/HFES 100-2007
+            </p>
+        </footer>
+
+    </div>
+
+    <script src="app.js"></script>
+</body>
+
+</html>
